@@ -489,6 +489,7 @@ $(document).ready(function () {
     })
     //预览
     $(document).on('click', '.yulan', function () {
+        set_default();
         var temoption = JSON.stringify(ymq_temoption);
         var temcondition = JSON.stringify(ymq_temcondition);
         var option = JSON.stringify(ymq_option);
@@ -535,6 +536,16 @@ $(document).ready(function () {
     var date_info = {"price":"","one_time":0,"date_format":"","date_minDateType":0,"min_date":"","date_maxDateType":0,"max_date":"","min_time":"","max_time":"","weekly_limit":[],"day_limit":[]};
     var custome_text = {"html":""};
     function save(){
+        set_default();
+        var option = JSON.stringify(ymq_option);
+        var condition = JSON.stringify(ymq_condition);
+        
+        sendPost(option,condition);
+    }
+    
+
+    //给没有值的配置默认值
+    function set_default(){
         var linshi_default_header_info = default_header_info;
         var error_num = 0;
         //给没有值的配置默认值
@@ -638,15 +649,7 @@ $(document).ready(function () {
             }
 
         }
-        myconsole(ymq_option);
-        var option = JSON.stringify(ymq_option);
-        var condition = JSON.stringify(ymq_condition);
-        
-        myconsole(option);
-        myconsole(condition);
-        sendPost(option,condition);
     }
-    
     //获取input的值
     function get_input_value(that){
         var value = that.val();
