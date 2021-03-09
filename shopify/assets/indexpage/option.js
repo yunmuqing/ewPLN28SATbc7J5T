@@ -430,7 +430,15 @@ $(document).ready(function () {
 
 
     
-    
+    function htmlSpecialChars(str)    
+    {    
+        str = str.replace(/&/g, '&amp;');  
+        str = str.replace(/</g, '&lt;');  
+        str = str.replace(/>/g, '&gt;');  
+        str = str.replace(/"/g, '&quot;');  
+        str = str.replace(/'/g, '&#039;');  
+        return str;  
+    }  
     
     //option表单改变构造json数据
     $(document).on('change', '.option_json', function () {
@@ -648,7 +656,7 @@ $(document).ready(function () {
                 value = 1; 
             }
         }
-        return value;
+        return htmlSpecialChars(value);
     }
 
     $(document).on('input propertychange', '.option_title_input', function () {
