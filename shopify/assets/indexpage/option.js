@@ -1326,7 +1326,7 @@ $(document).ready(function () {
                   <div class="row select_item">
                     <div class="col-2 padding_left_30">Title</div>
                     <div class="col-1 padding0">Price</div>
-                    <div class="col-2 padding_r0 align_center">one time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></div>
+                    <div class="col-2 padding_r0 align_center one_time_hide">one time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></div>
                     <div class="col-3 padding_r0">swatches</div>
                     <div class="col-1 padding_r0">hasstock</div>
                     <div class="col-1">Default</div>
@@ -1346,7 +1346,7 @@ $(document).ready(function () {
                   <div class="row select_item">
                     <div class="col-2 padding_left_30">Title</div>
                     <div class="col-2">Price</div>
-                    <div class="col-2 padding_r0 align_center">one time<span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></div>
+                    <div class="col-2 padding_r0 align_center one_time_hide">one time<span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></div>
                     <div class="col-1 padding_r0">hasstock</div>
                     <div class="col-1">Default</div>
                     <div class="col-2 condition_header_text">Condition</div>
