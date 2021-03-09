@@ -2346,11 +2346,15 @@ $(document).ready(function () {
       getImg(that,true);
     }
   })
+  $(document).on('click', '.up_img_checkBox', function (event) {
+      event.stopPropagation();   //  阻止事件冒泡
+  });
   $(document).on('click', '.up_img_box_item', function () {
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$(this).data('src')+img_suffix)
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($(this).data('src')).change();
     $('.close_img_box').trigger('click');
   })
+  
   $(document).on('click', '.load_more', function () {
     var that = $(this);
     that.addClass('btn-progress');
