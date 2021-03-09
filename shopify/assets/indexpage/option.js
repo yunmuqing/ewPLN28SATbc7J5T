@@ -656,7 +656,12 @@ $(document).ready(function () {
                 value = 1; 
             }
         }
-        return htmlSpecialChars(value);
+        if (that.hasClass('option_summernote')) {
+          return value;
+        }else{
+          return htmlSpecialChars(value);
+        }
+        
     }
 
     $(document).on('input propertychange', '.option_title_input', function () {
