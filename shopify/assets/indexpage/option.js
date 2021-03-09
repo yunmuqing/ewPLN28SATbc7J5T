@@ -2330,7 +2330,7 @@ $(document).ready(function () {
       getImg(that,true);
     }
   })
-  $(document).on('click', '.up_img_box_item', function () {
+  $(document).on('click', '.up_img_box_item img', function () {
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$(this).data('src')+img_suffix)
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($(this).data('src')).change();
   })
