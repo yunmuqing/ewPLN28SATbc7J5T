@@ -2282,7 +2282,7 @@ $(document).ready(function () {
           var result = JSON.parse(data.response);
           //myconsole(result)
           var html = `
-            <div class="up_img_box_item" data-src="${result.data.relative_path}" data-dismiss="modal">
+            <div class="up_img_box_item" data-src="${result.data.relative_path}">
               <input class="up_img_checkBox" type="checkBox" name="up_img" value="${result.data.relative_path}">
               <img src="${result.data.oss_url+img_suffix}">
             </div>
@@ -2330,9 +2330,10 @@ $(document).ready(function () {
       getImg(that,true);
     }
   })
-  $(document).on('click', '.up_img_box_item img', function () {
+  $(document).on('click', '.up_img_box_item', function () {
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$(this).data('src')+img_suffix)
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($(this).data('src')).change();
+    $('.close_img_box').trigger('click');
   })
   $(document).on('click', '.load_more', function () {
     var that = $(this);
@@ -2357,7 +2358,7 @@ $(document).ready(function () {
                     throw new Error('End Loop');
                   }
                   pushHtml += `
-                    <div class="up_img_box_item" data-src="${item}" data-dismiss="modal">
+                    <div class="up_img_box_item" data-src="${item}">
                       <input class="up_img_checkBox" type="checkBox" name="up_img" value="${item}">
                       <img src="${basImgUrl+item+img_suffix}">
                     </div>
