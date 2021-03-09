@@ -343,7 +343,6 @@ $(document).ready(function () {
       myconsole(ymq_option);
       ymq_index++;
     });
-
     //删除option时修改condition
     function deleteConditionByOption(now_key){
       now_key = now_key+'';
