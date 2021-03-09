@@ -973,7 +973,7 @@ $(document).ready(function () {
               </div>
             </div>
             
-            <div class="col-2 no_hide">
+            <div class="col-2 no_hide one_time_hide">
               <div class="form-group">
                 <label class="align_center">One Time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></label>
                 <div class="custom-switches-stacked">
@@ -1078,7 +1078,7 @@ $(document).ready(function () {
             </div>
             
             <div class="col-2">
-              <div class="form-group no_hide">
+              <div class="form-group no_hide one_time_hide">
                 <label class="align_center">One Time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></label>
                 <div class="custom-switches-stacked">
                   <label class="custom-switch">
@@ -1122,7 +1122,7 @@ $(document).ready(function () {
               </div>
             </div>
             
-            <div class="col-2 no_hide">
+            <div class="col-2 no_hide one_time_hide">
               <div class="form-group">
                 <label class="align_center">One Time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></label>
                 <div class="custom-switches-stacked">
@@ -1177,7 +1177,7 @@ $(document).ready(function () {
               </div>
             </div>
             
-            <div class="col-2 no_hide">
+            <div class="col-2 no_hide one_time_hide">
               <div class="form-group">
                 <label class="align_center">One Time <span class="ymq_tools ymq_tools_span" data-title="If selected, the price increase will only be increased once, and will not increase with the purchase quantity."></span></label>
                 <div class="custom-switches-stacked">
@@ -1394,7 +1394,7 @@ $(document).ready(function () {
                 </div>
               </div>
               
-              <div class="col-2 padding_r0 no_hide">
+              <div class="col-2 padding_r0 no_hide one_time_hide">
                 <div class="form-group">
                   <div class="custom-switches-stacked">
                     <label class="custom-switch">
@@ -1475,7 +1475,7 @@ $(document).ready(function () {
                 </div>
               </div>
               
-              <div class="col-2 no_hide">
+              <div class="col-2 no_hide one_time_hide">
                 <div class="form-group">
                   <div class="custom-switches-stacked">
                     <label class="custom-switch">
@@ -2425,174 +2425,4 @@ $(document).ready(function () {
   jQuery.fn.extend({
     ymqColorpicker:function(config = {}){
       if ($(this).length > 0) {
-        var color = $(this).parent('.canvas_type').children('.canvas1').val();
-        //默认值
-        var defaultConfig = {
-          submit: 0,
-          color:color,
-          onSubmit:function(hsb,hex,rgb,el) {
-            //$(el).css('background-color', '#'+hex);
-            $(el).parent().children('.color_picker_span').css('background','#'+hex);
-            $(el).parent().children('.canvas1').val(hex).change();
-            $(el).colpickHide();
-
-          }
-        };
-        //使用配置值覆盖默认配置
-        for(var key in defaultConfig){
-          if (config.hasOwnProperty(key)) {
-            defaultConfig[key] = config[key]
-          }  
-        }
-
-        $(this).colpick({
-          color:defaultConfig.color,
-          onSubmit:defaultConfig.onSubmit
-        });
-      }
-    }
-  });
-
-  $('.color_picker').ymqColorpicker()
-
-  
-  $(document).on('change', '.canvas_type_select', function () {
-    $(this).parent().parent().next().children('.canvas_type').hide();
-    $(this).parent().parent().next().children('.canvas_type'+$(this).val()).show();
-  })
-
-
-    
-    $(document).on('change', '.dateType', function () {
-      if ($(this).val() == 2) {
-        $(this).parent().parent().next().show();
-      }else{
-        $(this).parent().parent().next().hide();
-      }
-    })
-
-
-
-    Array.prototype.remove = function(val) { 
-        var index = this.indexOf(val); 
-        if (index > -1) { 
-            this.splice(index, 1); 
-        } 
-    };
-    function add_option_summernote(){
-        $('.option_summernote').summernote({
-            fontSizes: ['12', '14','16', '18','20','20', '24','26','28','30','32', '36', '40','48' , '64'],
-            lineHeights: ['0.5', '0.8','1.0', '1.2','1.4','1.5', '1.6','1.8','2.0','2.5','3.0'],
-            toolbar: [
-                ['style', ['style']],
-                ['fontface', ['fontname','color','fontsize']],//字体
-                ['font', ['bold', 'italic', 'superscript', 'subscript', 'strikethrough','underline', 'clear']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'hr']],
-                ['view', ['fullscreen', 'codeview']],
-                ['help', ['help']],
-                ['mybutton', ['hello']]
-            ],
-            popover: {
-                image: [
-                    ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                    ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                    ['remove', ['removeMedia']],
-                    ['link', ['linkDialogShow', 'unlink']]
-                ],
-                link: [
-                    ['link', ['linkDialogShow', 'unlink']]
-                ],
-                table: [
-                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
-                ],
-                air: [
-                    ['color', ['color']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['para', ['ul', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture']]
-                ]
-            },
-            focus: true,
-            minHeight: 200,
-            callbacks: {
-                // 失去简单触发change事件
-                onBlur: function(files) {
-                    $('.option_summernote').change();
-                }
-            }
-        });
-    }
-
-
-
-})
-var enLang = {                            
-      name  : "en",
-      month : ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-      weeks : [ "SU","MO","TU","WE","TH","FR","SA" ],
-      times : ["Hour","Minute","Second"],
-      timetxt: ["Time","Start Time","End Time"],
-      backtxt:"Back",
-      clear : "Clear",
-      today : "Now",
-      yes   : "Confirm",
-      close : "Close"
-  }
-//蓝色主题色
-var jedateblue = { bgcolor:"#275efe",color:"#ffffff", pnColor:"#00CCFF"};
-// var jedateblue = { bgcolor:"#00A1CB",color:"#ffffff", pnColor:"#00CCFF"};
-var jedategreen = {bgcolor:"#00A680",pnColor:"#00DDAA"};
-var jedatered = {bgcolor:"#D91600",pnColor:"#FF6653"};
-function dateDD(elem){
-    jeDate(elem,{
-        theme:jedateblue, 
-        format: 'YYYY-MM-DD',
-        isinitVal:true,
-        onClose:true,  
-        trigger:false,
-        language:enLang,
-        donefun: function(obj){
-            $(obj.elem).change()
-        }  
-    });
-}
-function dateTime(elem){
-    jeDate(elem,{
-        theme:jedateblue, 
-        format: 'hh',
-        onClose:false, 
-        trigger:false, 
-        language:enLang,
-        donefun: function(obj){
-            $(obj.elem).change()
-        }
-    });
-}
-function dateAndTime(elem){
-    jeDate(elem,{
-        theme:jedateblue, 
-        format: 'YYYY-MM-DD hh:mm:ss',
-        onClose:false, 
-        trigger:false, 
-        language:enLang,
-        donefun: function(obj){
-            $(obj.elem).change()
-        }
-    });
-}
-
-$(document).on("mouseover",".ymq_tools",function(){
-　　var _this = $(this);
-    _this.justToolsTip({
-        events:event,
-        animation:"fadeIn",
-        //width:"300px",
-        contents:_this.data('title'),
-        gravity:'right'
-    });
-})
+        var color = $(this).
