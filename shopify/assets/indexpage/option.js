@@ -74,7 +74,7 @@ $(document).ready(function () {
                 //是数字
                 if(item == 'number' && !numberRe.test(inputDom.val())){
                   error_num++;
-                  errorInfo += `<span class="ymq_error">输入数字</span>`;
+                  errorInfo += `<span class="ymq_error">enter number</span>`;
                 }
                 //数字大于
                 if(item.search("numbermin:") > -1 && inputDom.val() < item.split(':')[1]){
