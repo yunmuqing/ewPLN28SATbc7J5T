@@ -342,6 +342,9 @@ $(document).ready(function () {
       ymq_option[key_prefix+ymq_index_prefix+ymq_index]['type'] = type;
       myconsole(ymq_option);
       ymq_index++;
+      $('html, body').animate({
+        scrollTop: $('.ymq_bottom').offset().top},500
+      );
     });
     //删除option时修改condition
     function deleteConditionByOption(now_key){
