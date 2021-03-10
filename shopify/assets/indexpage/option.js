@@ -911,10 +911,9 @@ $(document).ready(function () {
                   <div class="form-group">
                     <label>Help Text position</label>
                     <select class="form-control select2 tooltip_position option_json" data-id="option_id" data-key="tooltip_position">
-                      <option value="1" ${Number(commonValue['tooltip_position'])== 1 ? 'selected' : ''}>Above the entire option</option>
-                      <option value="2" ${Number(commonValue['tooltip_position'])== 2 ? 'selected' : ''}>Below the entire option</option>
+                      <option value="1" ${Number(commonValue['tooltip_position'])== 1 ? 'selected' : ''}>Below the entire option</option>
+                      <option value="2" ${Number(commonValue['tooltip_position'])== 2 ? 'selected' : ''}>Above the entire option</option>
                       <option value="3" ${Number(commonValue['tooltip_position'])== 3 ? 'selected' : ''}>Below the option title</option>
-                      <option value="4" ${Number(commonValue['tooltip_position'])== 4 ? 'selected' : ''}>Right of option title</option>
                     </select>
                   </div>
                 </div>
