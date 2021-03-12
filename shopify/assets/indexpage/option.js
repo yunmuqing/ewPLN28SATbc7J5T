@@ -120,8 +120,8 @@ $(document).ready(function () {
     var canvasTypeArr = [5,8];
     
     //var condition = {};
-    var basImgUrl = 'http://ymq-shopify.oss-us-east-1.aliyuncs.com/';
-    var img_suffix = '?x-oss-process=image/resize,w_150/quality,q_80';
+    var basImgUrl = '';
+    var img_suffix = '';
     
     
     //有值就回显
@@ -1442,7 +1442,7 @@ $(document).ready(function () {
                     </div>
                     <div class="canvas_type canvas_type2" style="${Number(value['canvas_type'])== 2 ? '' : 'display: none;'}">
                       <button type="button" class="btn btn-primary selectImgBtn" data-toggle="modal" data-target="#selectImgModel" data-id="option_value_id" data-pid="option_id"><i class="fa fa-upload"></i></button>
-                      <img class="canvas_img canvas_img_option_value_id" src="${value['canvas2']!= '' ? basImgUrl+value['canvas2']+img_suffix : '/svg/swatch.png'}">
+                      <img class="canvas_img canvas_img_option_value_id" src="${value['canvas2']!= '' ? basImgUrl+value['canvas2'] : '/svg/swatch.png'}">
                       <input type="hidden" name="canvas2" class="option_value_json canvas2" data-id="option_value_id" data-key="canvas2" data-pid="option_id" value="${value['canvas2']}">
                     </div>
                   </div>
@@ -2197,10 +2197,10 @@ $(document).ready(function () {
         //默认值
         var defaultConfig = {
           filesSize:100,
-          url:'/api/oss/uploadimage',
+          url:'/api/aws/uploadimage',
           multi_selection:true,
           filters : {
-            max_file_size : '5mb', //最大只能上传400kb的文件
+            max_file_size : '500kb', //最大只能上传400kb的文件
             //prevent_duplicates : true, //不允许选取重复文件
             mime_types: [
               {title : "Image files", extensions : "jpg,jpeg,bmp,gif,png"},
@@ -2300,11 +2300,11 @@ $(document).ready(function () {
         uploade.init();
         function fileUploaded(uder, file, data){
           var result = JSON.parse(data.response);
-          //myconsole(result)
+          console.log(result)
           var html = `
             <div class="up_img_box_item" data-src="${result.data.relative_path}">
               <input class="up_img_checkBox" type="checkBox" name="up_img" value="${result.data.relative_path}">
-              <img src="${result.data.oss_url+img_suffix}">
+              <img src="${result.data.relative_path}">
             </div>
           `;
           $('.up_img_box').prepend(html);
@@ -2354,7 +2354,7 @@ $(document).ready(function () {
       event.stopPropagation();   //  阻止事件冒泡
   });
   $(document).on('click', '.up_img_box_item', function () {
-    $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$(this).data('src')+img_suffix)
+    $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$(this).data('src'))
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($(this).data('src')).change();
     $('.close_img_box').trigger('click');
   })
@@ -2367,43 +2367,31 @@ $(document).ready(function () {
 
   function getImg(that,first = false){
     $.ymqajax({
-        url: "/api/oss/getimage",
+        url: "/api/aws/getimage",
         data: {nextMarker},
         success: function (res) {
+          console.log(res)
           if (res.code != 201) {
             nextMarker = res.data.nextMarker;
             var pushHtml = ``;
-            try{
-              res.data.data.forEach((item) => {
-                  if (firstImg == item) {
-                    $('.load_more').text('no more');
-                    $('.load_more').addClass('disabled');
-                    $('.load_more').removeClass('load_more');
-                    throw new Error('End Loop');
-                  }
-                  pushHtml += `
-                    <div class="up_img_box_item" data-src="${item}">
-                      <input class="up_img_checkBox" type="checkBox" name="up_img" value="${item}">
-                      <img src="${basImgUrl+item+img_suffix}">
-                    </div>
-                  `;
-              })
-            } catch (e) {
-                
-            }
-            
+            res.data.data.forEach((item) => {
+                pushHtml += `
+                  <div class="up_img_box_item" data-src="${item}">
+                    <input class="up_img_checkBox" type="checkBox" name="up_img" value="${item}">
+                    <img src="${basImgUrl+item}">
+                  </div>
+                `;
+            })
             $('.up_img_box').append(pushHtml);
-            if (first) {
-              
-              if (res.data.data.length < 100) {
-                $('.load_more').text('no more');
-                $('.load_more').addClass('disabled');
-                $('.load_more').removeClass('load_more');
-              }
-              firstImg = res.data.data[0];
-            }
+          }else{
+            $('.load_more').text('no more');
+            $('.load_more').addClass('disabled');
+            $('.load_more').removeClass('load_more');
           }
           $('.load').hide()
+          that.removeClass('btn-progress');
+        },
+        error:function(res){
           that.removeClass('btn-progress');
         }
     });
@@ -2414,11 +2402,14 @@ $(document).ready(function () {
       var that = $(this);
       that.addClass('btn-progress');
       $.ymqajax({
-          url: "/api/oss/deleteimg",
+          url: "/api/aws/deleteimg",
           data: {img_arr},
           success: function (res) {
             myconsole(res)
             deleteCheckboxValue($('.up_img_checkBox:checked'))
+            that.removeClass('btn-progress');
+          },
+          error:function(res){
             that.removeClass('btn-progress');
           }
       });
