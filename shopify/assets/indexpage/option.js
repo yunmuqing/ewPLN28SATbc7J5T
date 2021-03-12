@@ -133,7 +133,7 @@ $(document).ready(function () {
     $(document).on('click', '.add_tem span', function () {
       var temId = $('.tem_select').val();
       if (temId.length < 1) {
-        alert('请选择模板');
+        alert('Please choose one template');
         return;
       }
       var temType = $('.tem_type_select').val();
@@ -144,7 +144,7 @@ $(document).ready(function () {
         return true;
       })
       if (temId.length < 1) {
-        alert('所选模板都已经添加');
+        alert('All selected templates have been added');
         return;
       }
       var that = $(this);
