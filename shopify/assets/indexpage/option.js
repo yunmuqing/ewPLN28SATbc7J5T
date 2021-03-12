@@ -2358,7 +2358,11 @@ $(document).ready(function () {
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($(this).data('src')).change();
     $('.close_img_box').trigger('click');
   })
-  
+  $(document).on('click', '.add_img_url', function () {
+    $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$('.img_url').val())
+    $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($('.img_url').val()).change();
+    $('.close_img_box').trigger('click');
+  })
   $(document).on('click', '.load_more', function () {
     var that = $(this);
     that.addClass('btn-progress');
