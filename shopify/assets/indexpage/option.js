@@ -2347,7 +2347,7 @@ $(document).ready(function () {
     if ($('.up_img_box .up_img_box_item').length == 0) {
       var that = $(this);
       that.addClass('btn-progress');
-      getImg(that,true);
+      getImg(that);
     }
   })
   $(document).on('click', '.up_img_checkBox', function (event) {
@@ -2361,7 +2361,16 @@ $(document).ready(function () {
   $(document).on('click', '.add_img_url', function () {
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).attr('src',basImgUrl+$('.img_url').val())
     $('#option_'+$('.canvas_pid').val()+' .canvas_img_'+$('.canvas_id').val()).next('.canvas2').val($('.img_url').val()).change();
+    var pushHtml = `
+          <div class="up_img_box_item" data-src="${$('.img_url').val()}">
+            <input class="up_img_checkBox" type="checkBox" data-id="0" name="up_img" value="${$('.img_url').val()}">
+            <img src="${basImgUrl+$('.img_url').val()}">
+          </div>
+        `;
+    $('.up_img_box').prepend(pushHtml);
+    images_arr.push($('.img_url').val())
     $('.close_img_box').trigger('click');
+    $('.img_url').val('')
   })
   $(document).on('click', '.load_more', function () {
     var that = $(this);
@@ -2369,7 +2378,108 @@ $(document).ready(function () {
     getImg(that);
   })
 
-  function getImg(that,first = false){
+  //批量添加图片url
+  $(document).on('click', '.add_imgs_urls', function () { 
+        $(this).fireModal({
+            title: 'Add image links in bulk',
+            body: `
+            <div style="height: calc(100vh - 200px)!important;">
+              <div class="form-group">
+                  <label>Add image links in bulk(Press enter to wrap and enter the next link address)</label>
+                  <textarea class="imgs_urls form-control" style="min-height:200px;"></textarea>
+              </div>
+            </div>
+            `,
+            center: true,
+            initShow: true,
+            buttons: [
+                {
+                    text: 'ADD',
+                    class: 'btn btn-secondary add_imgs_btn btn-primary',
+                    handler: function(modal) {
+                      var imgs_urls_val = $('.imgs_urls').val();
+                      console.log(imgs_urls_val)
+                      if (imgs_urls_val == '') {
+                        alert('Must not be empty');
+                        return false;
+                      }
+                      imgs_urls_val = imgs_urls_val.split(/[(\r\n)\r\n]+/)
+                      
+                      imgs_urls_val = imgs_urls_val.filter(function (s) {
+                         return s && s.trim();
+                      });
+                      $('.add_imgs_btn').addClass('btn-progress');
+                      $.ymqajax({
+                          url: "/api/img/addimg",
+                          data: {imgs_urls_val},
+                          success: function (res) {
+                            console.log(res)
+                            var pushHtml = ``;
+                            res.data.forEach((item) => {
+                                pushHtml += `
+                                  <div class="up_img_box_item" data-src="${item.url}">
+                                    <input class="up_img_checkBox" type="checkBox" name="up_img" data-id="${item.id}" value="${item.url}">
+                                    <img src="${basImgUrl+item.url}">
+                                  </div>
+                                `;
+                            })
+                            $('.up_img_box').prepend(pushHtml);
+                            $('.add_imgs_btn').removeClass('btn-progress');
+                            modal.modal('hide');
+                          },
+                          error:function(res){
+                            $('.add_imgs_btn').removeClass('btn-progress');
+                          }
+                      });
+                      
+                    }
+                },
+                {
+                    text: 'Cancle',
+                    class: 'btn btn-secondary btn-shadow',
+                    handler: function(modal) {
+                        modal.modal('hide');
+                    }
+                }
+            ]
+        });
+  })
+
+  function getImg(that){
+    var page = $('.load_more_btn').data('page');
+    $.ymqajax({
+        url: "/api/img/get",
+        data: {page},
+        success: function (res) {
+          if (res.msg < 100 ) {
+            $('.load_more_btn').text('no more');
+            $('.load_more_btn').removeClass('load_more');
+          }else{
+            $('.load_more_btn').addClass('load_more');
+            $('.load_more_btn').data('page',Number(page)+1);
+          }
+          if (res.msg > 0) {
+            var pushHtml = ``;
+            res.data.data.forEach((item) => {
+                pushHtml += `
+                  <div class="up_img_box_item" data-src="${item.url}">
+                    <input class="up_img_checkBox" type="checkBox" data-id="${item.id}" name="up_img" value="${item.url}">
+                    <img src="${basImgUrl+item.url}">
+                  </div>
+                `;
+            })
+            $('.up_img_box').append(pushHtml);
+          }
+          $('.load').hide()
+          that.removeClass('btn-progress');
+        },
+        error:function(res){
+          that.removeClass('btn-progress');
+        }
+    });
+  }
+
+  function getImgaws(that,first = false){
     $.ymqajax({
         url: "/api/aws/getimage",
         data: {nextMarker},
@@ -2401,6 +2511,25 @@ $(document).ready(function () {
     });
   }
   $(document).on('click', '.up_img_delete', function () {
+    var img_arr = getCheckboxDataId($('.up_img_checkBox:checked'));
+    if (img_arr.length > 0) {
+      var that = $(this);
+      that.addClass('btn-progress');
+      $.ymqajax({
+          url: "/api/img/delete",
+          data: {img_arr},
+          success: function (res) {
+            deleteCheckboxValue($('.up_img_checkBox:checked'))
+            that.removeClass('btn-progress');
+            that.hide()
+          },
+          error:function(res){
+            that.removeClass('btn-progress');
+          }
+      });
+    }
+  })
+  $(document).on('click', '.up_img_delete_aws', function () {
     var img_arr = getCheckboxValue($('.up_img_checkBox:checked'));
     if (img_arr.length > 0) {
       var that = $(this);
@@ -2441,7 +2570,14 @@ $(document).ready(function () {
     })
     return check_arr;
   }
-
+  function getCheckboxDataId(checkboxDmo){
+    var check_arr = [];
+    checkboxDmo.each(function(){
+      //check_arr[index] = $(this).val()
+      check_arr.push($(this).data('id'));
+    })
+    return check_arr;
+  }
   jQuery.fn.extend({
     ymqColorpicker:function(config = {}){
       if ($(this).length > 0) {
