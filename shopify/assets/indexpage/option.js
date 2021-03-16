@@ -18,6 +18,7 @@ $(document).ready(function () {
           if (error_num == 0) {
             customeFunction();
           }else{
+            alert('option title,option value title is required');
             $('#'+$(this).attr('id')+' .ymqhaserror').eq(0).focus();
           }
           return false;
