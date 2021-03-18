@@ -2446,6 +2446,29 @@ $(document).ready(function () {
         });
   })
 
+  //批量添加图片url
+  $(document).on('click', '.howtouse', function () { 
+        $(this).fireModal({
+            title: 'How to use shopify image',
+            body: `
+            <div style="height: calc(100vh - 200px)!important;">
+              <iframe width="100%" height="400" src="https://www.youtube.com/embed/znyzvu5jpQs?hl=en_GB&rel=0&version=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            `,
+            center: true,
+            initShow: true,
+            buttons: [
+                {
+                    text: 'Cancle',
+                    class: 'btn btn-secondary btn-shadow',
+                    handler: function(modal) {
+                        modal.modal('hide');
+                    }
+                }
+            ]
+        });
+  })
+
   function getImg(that){
     var page = $('.load_more_btn').data('page');
     $.ymqajax({
