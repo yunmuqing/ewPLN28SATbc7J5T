@@ -1229,3 +1229,12 @@ quantity
   padding: calc(var(--discount-error-padding-top) * 1px) calc(var(--discount-error-padding-right) * 1px) calc(var(--discount-error-padding-bottom) * 1px) calc(var(--discount-error-padding-left) * 1px);
 
 }
+#ymq-price-addons{
+  border: 1px solid var(--price-border-color);
+  background: var(--price-background-color);
+  color: var(--price-font-color);
+  padding: calc(var(--price-padding-u-d) * 1px) calc(var(--price-padding-l-r) * 1px);
+  width: calc(var(--price-width) * 1%);
+  border-radius: calc(var(--price-border-radius) * 1px);
+  max-width: calc(var(--price-max-width) * 1px);
+}
