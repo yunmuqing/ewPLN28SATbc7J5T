@@ -1914,7 +1914,7 @@ $(document).ready(function () {
           `;
           var disabled_text= `
               <div class="col-3 align_center">
-                  <span class="padding_r15">Then</span>
+                  <span class="padding_r15">disabled text</span>
                   <input class="form-control disabled_text" type="text" value="${now_disabled_text}">
               </div>
           `
