@@ -167,6 +167,9 @@ $(document).ready(function () {
               }
             })
             that.removeClass('btn-progress');
+            $('html, body').animate({
+              scrollTop: $('.ymq_bottom').offset().top},500
+            );
           },
           error: function (res) {
               that.removeClass('btn-progress');
