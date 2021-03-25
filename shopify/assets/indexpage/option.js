@@ -503,13 +503,15 @@ $(document).ready(function () {
         var temcondition = JSON.stringify(ymq_temcondition);
         var option = JSON.stringify(ymq_option);
         var condition = JSON.stringify(ymq_condition);
+        var condition = JSON.stringify(ymq_condition);
         var yulan = true;
+        var variantjson = JSON.stringify(ymq_variantjson);
         $('.yulan').addClass('btn-progress');
         $.ajax({
             type: 'POST',
             url: '/api/option/save',
             dataType: 'json',
-            data: {product_id,option,condition,temoption,temcondition,oldTemId,yulan},
+            data: {product_id,option,condition,temoption,temcondition,oldTemId,yulan,variantjson},
             success: function (res) {
               $('.yulan').removeClass('btn-progress');
               $('.yulan-box').show();
@@ -1753,6 +1755,7 @@ $(document).ready(function () {
         $(this).fireModal({
             title: 'Add conditions',
             body: html,
+            size: 'larg-modal',
             center: true,
             initShow: true,
             removeOnDismiss:true,
