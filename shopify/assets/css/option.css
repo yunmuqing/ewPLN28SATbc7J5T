@@ -381,6 +381,13 @@
   .insert_img_box .add_img_url{
     border-radius: 4px !important;
   }
+  .section-header-back a{
+        background-image: url("data:image/svg+xml,%3Csvg t='1616723201973' class='icon' viewBox='0 0 1506 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='3257' width='16' height='16'%3E%3Cpath d='M1277.88977564 224.440834H740.72230864l-0.906357-176.437459c-0.151059-42.749829-51.964457-64.049214-82.17635-33.83732L194.49127464 478.371798c-18.882433 18.882433-18.731374 49.396446 0.151059 68.27888L662.32244564 1009.950065c30.514012 30.211894 82.32741 8.45933 82.02529-34.441559l-0.755297-170.999317H1278.04083464c26.284347 0 47.432673-21.299385 47.432673-47.432673V271.873506c0-26.284347-21.299385-47.432673-47.583732-47.432672z' p-id='3258' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E");
+        height: 26px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin-top: 8px;
+      }
   @media(max-width: 768px) {
         .jedate .jedate-pane,.jedate .jedate-time .timepane{
           width: 50%;
